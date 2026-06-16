@@ -75,9 +75,7 @@ jobs:
       - name: Add EC2 host to known_hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
       - name: Write SSH key
         run: |
