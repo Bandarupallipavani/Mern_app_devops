@@ -1,11 +1,10 @@
-# Three services: backend API on 5000, frontend on 5173, and mongodb on 27017
+name: mern-devops
+
 services:
   mongodb:
     image: mongo:6.0
     container_name: mongodb
     restart: always
-    ports:
-      - "27017:27017"
     volumes:
       - mongo_data:/data/db
 
@@ -15,9 +14,9 @@ services:
     restart: always
     environment:
       - MONGO_URI=mongodb://mongodb:27017/taskapp
-      - PORT=5000
+      - PORT=6109
     ports:
-      - "5000:5000"
+      - "6109:6109"
     depends_on:
       - mongodb
 
@@ -25,11 +24,11 @@ services:
     build:
       context: ./client
       args:
-        VITE_API_URL: http://localhost:5000/api
+        VITE_API_URL: https://pavani.vjstartup.com/be/api
     container_name: frontend
     restart: always
     ports:
-      - "5173:5173"
+      - "3109:5173"
     depends_on:
       - backend
 
