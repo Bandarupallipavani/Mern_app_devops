@@ -3,28 +3,16 @@ import TaskCard from "./TaskCard";
 const TaskList = ({ tasks, onDeleteTask }) => {
   if (tasks.length === 0) {
     return (
-      <div className="text-center py-12">
-        <div className="bg-white rounded-lg shadow-sm border p-8 max-w-md mx-auto">
-          <div className="text-gray-400 mb-4">
-            <svg
-              className="w-16 h-16 mx-auto"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1}
-                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-              />
-            </svg>
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            No tasks yet
+      <div className="flex justify-center items-center py-16">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-10 text-center max-w-md w-full shadow-xl">
+          <div className="text-5xl mb-4">📋</div>
+
+          <h3 className="text-2xl font-bold text-white mb-3">
+            No Tasks Yet
           </h3>
-          <p className="text-gray-600">
-            Get started by creating your first task!
+
+          <p className="text-gray-400">
+            Start your productivity journey by adding your first task.
           </p>
         </div>
       </div>
@@ -32,16 +20,34 @@ const TaskList = ({ tasks, onDeleteTask }) => {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">
-          Your Tasks ({tasks.length})
-        </h2>
+    <div>
+      {/* Header */}
+
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h2 className="text-3xl font-bold text-white">
+            Your Tasks
+          </h2>
+
+          <p className="text-gray-400 mt-1">
+            Total Tasks: {tasks.length}
+          </p>
+        </div>
+
+        <div className="bg-blue-600 px-4 py-2 rounded-xl text-white font-semibold">
+          {tasks.length} Tasks
+        </div>
       </div>
 
-      <div className="grid gap-4">
+      {/* Task Grid */}
+
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
         {tasks.map((task) => (
-          <TaskCard key={task._id} task={task} onDelete={onDeleteTask} />
+          <TaskCard
+            key={task._id}
+            task={task}
+            onDelete={onDeleteTask}
+          />
         ))}
       </div>
     </div>
