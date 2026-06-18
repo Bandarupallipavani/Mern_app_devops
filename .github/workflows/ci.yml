@@ -65,7 +65,7 @@ jobs:
 
   deploy:
     needs: build-and-lint
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: self-hosted        # ← CHANGED: uses YOUR server now
 
     steps:
