@@ -24,6 +24,7 @@ function App() {
       const response = await taskService.getAllTasks();
       setTasks(response.data);
     } catch (err) {
+      console.error('Error fetching tasks:', err);
       setError('Failed to fetch tasks');
     } finally {
       setLoading(false);
@@ -34,15 +35,19 @@ function App() {
     try {
       const response = await taskService.createTask(taskData);
 
-      setTasks((prev) => [response.data, ...prev]);
+      setTasks((prevTasks) => [response.data, ...prevTasks]);
 
       setIsDialogOpen(false);
 
-      return { success: true };
+      return {
+        success: true,
+      };
     } catch (err) {
+      console.error('Error creating task:', err);
+
       return {
         success: false,
-        error: err.message,
+        error: err.message || 'Failed to create task',
       };
     }
   };
@@ -51,10 +56,11 @@ function App() {
     try {
       await taskService.deleteTask(taskId);
 
-      setTasks((prev) =>
-        prev.filter((task) => task._id !== taskId)
+      setTasks((prevTasks) =>
+        prevTasks.filter((task) => task._id !== taskId)
       );
     } catch (err) {
+      console.error('Error deleting task:', err);
       setError('Failed to delete task');
     }
   };
@@ -63,8 +69,8 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
-      {/* HEADER */}
 
+      {/* Header */}
       <header className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 shadow-lg">
         <div className="max-w-7xl mx-auto px-6 py-10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-5">
@@ -75,7 +81,7 @@ function App() {
               </h1>
 
               <p className="mt-2 text-white/80">
-                MERN + Docker + GitHub Actions Demo.......
+                MERN + Docker + GitHub Actions Demo
               </p>
             </div>
 
@@ -90,8 +96,7 @@ function App() {
         </div>
       </header>
 
-      {/* STATS */}
-
+      {/* Stats Section */}
       <section className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid md:grid-cols-3 gap-5">
 
@@ -117,8 +122,7 @@ function App() {
         </div>
       </section>
 
-      {/* TASK LIST */}
-
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 pb-10">
 
         {loading ? (
@@ -131,7 +135,7 @@ function App() {
 
             <button
               onClick={fetchTasks}
-              className="mt-4 px-4 py-2 bg-red-500 rounded-lg"
+              className="mt-4 px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600"
             >
               Retry
             </button>
@@ -142,8 +146,10 @@ function App() {
             onDeleteTask={handleDeleteTask}
           />
         )}
+
       </main>
 
+      {/* Add Task Dialog */}
       {isDialogOpen && (
         <AddTaskDialog
           onClose={() => setIsDialogOpen(false)}
