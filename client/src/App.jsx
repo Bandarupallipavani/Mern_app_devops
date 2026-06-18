@@ -81,7 +81,7 @@ function App() {
               </h1>
 
               <p className="mt-2 text-white/80">
-                MERN + Docker + GitHub Actions Demo
+                MERN + Docker + GitHub Actions Demo....
               </p>
             </div>
 
